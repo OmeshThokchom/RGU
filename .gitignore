@@ -1,0 +1,83 @@
+# Environment files
+.env
+config.php
+.venv/
+venv/
+ENV/
+
+# Dependencies
+/vendor/
+/node_modules/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDEs and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs and databases
+*.log
+*.sqlite
+*.sql
+*.sql.gz
+error.log
+
+# Uploads and user content
+/uploads/*
+!/uploads/.gitkeep
+/storage/*
+!/storage/.gitkeep
+
+# Cache and temporary files
+*.cache
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Test coverage
+/coverage/
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Production files
+/build/
+/dist/
+*.zip
+*.tar.gz
+
+# Configuration backups
+*.bak
+*.backup
+*~
+
+# Session files
+/sessions/
+*.session
+
+# Local development
+.ngrok/
+.python-version
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Security files
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+
+# Documentation generated
+/docs/_build/
+/docs/api/
+
+# System specific
+.directory
+Desktop.ini

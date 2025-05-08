@@ -1,0 +1,1407 @@
+/* Glassmorphism Variables */
+:root {
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+    --glass-blur: blur(10px);
+    --transition-smooth: all 0.3s ease-in-out;
+}
+
+/* Base Glass Effect */
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    border-radius: 12px;
+}
+
+/* Enhanced Glass Button Effects */
+.btn-glass {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(255, 255, 255, 0.05) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-glass::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle at center,
+        rgba(255, 255, 255, 0.1) 0%,
+        transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-glass:hover {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.15) 0%, 
+        rgba(255, 255, 255, 0.1) 100%
+    );
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.btn-glass:hover::before {
+    opacity: 1;
+}
+
+.btn-glass:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-glass.primary {
+    background: linear-gradient(135deg, 
+        rgba(107, 70, 193, 0.8) 0%, 
+        rgba(85, 60, 154, 0.8) 100%
+    );
+}
+
+.btn-glass.primary:hover {
+    background: linear-gradient(135deg, 
+        rgba(107, 70, 193, 0.9) 0%, 
+        rgba(85, 60, 154, 0.9) 100%
+    );
+}
+
+/* Glass Cards */
+.glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+        circle at center,
+        rgba(255, 255, 255, 0.1) 0%,
+        transparent 60%
+    );
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.glass-card:hover::before {
+    opacity: 1;
+}
+
+/* Floating Action Button */
+.fab-glass {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth);
+    z-index: 100;
+}
+
+.fab-glass:hover {
+    transform: scale(1.1);
+}
+
+/* Modal Base */
+.modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--modal-bg);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition-smooth);
+    z-index: 1000;
+}
+
+.modal-container.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-glass {
+    width: 90%;
+    max-width: 500px;
+    padding: 24px;
+    transform: scale(0.9) translateY(20px);
+    transition: var(--transition-smooth);
+}
+
+.modal-container.active .modal-glass {
+    transform: scale(1) translateY(0);
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 30px;
+    width: 90%;
+    max-width: 600px;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.modal.active .modal-content {
+    transform: scale(1);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Dynamic Island Style Delete Confirmation */
+.dynamic-island {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100%);
+    padding: 16px 24px;
+    min-width: 300px;
+    max-width: 90%;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: var(--transition-smooth);
+    z-index: 1100;
+}
+
+.dynamic-island.active {
+    transform: translateX(-50%) translateY(0);
+}
+
+.dynamic-island .actions {
+    display: flex;
+    gap: 12px;
+    margin-left: auto;
+}
+
+/* Toast Notifications */
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.toast-glass {
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transform: translateX(120%);
+    transition: var(--transition-smooth);
+}
+
+.toast-glass.active {
+    transform: translateX(0);
+}
+
+/* Form Elements */
+.input-glass {
+    width: 100%;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    color: inherit;
+    transition: var(--transition-smooth);
+}
+
+.input-glass:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    outline: none;
+}
+
+/* Reset any conflicting styles */
+.form-group input:not([type="submit"]):not([type="button"]):not([type="reset"]),
+.form-group select,
+.form-group textarea {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    user-select: text !important;
+    -webkit-user-select: text !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Ensure proper z-index stacking */
+.form-group {
+    position: relative;
+    z-index: 1;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    position: relative;
+    z-index: 2;
+}
+
+/* Icons */
+.icon {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+}
+
+/* Public Pages Glass Effects */
+body:not(.admin-body) .glass {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    border-radius: 12px;
+}
+
+/* Event Cards with Glass Effect */
+body:not(.admin-body) .event-card {
+    overflow: hidden;
+    position: relative;
+}
+
+body:not(.admin-body) .event-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Notice Cards with Glass Effect */
+body:not(.admin-body) .notice-item.important {
+    border-left: 4px solid #6b46c1;
+}
+
+body:not(.admin-body) .notice-item .important-badge {
+    background: linear-gradient(135deg, #6b46c1 0%, #553c9a 100%);
+}
+
+/* Department Cards with Enhanced Glass Effect */
+.departments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: clamp(1.5rem, 3vw, 2rem);
+    padding: clamp(1.5rem, 2vw, 2rem) 0;
+}
+
+.department-card {
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: clamp(1.5rem, 2vw, 2rem);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.department-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 30px rgba(107, 70, 193, 0.15);
+}
+
+.department-card h3 {
+    font-size: clamp(1.25rem, 1.5vw, 1.5rem);
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.department-card h3 i {
+    font-size: 1.25em;
+    color: rgba(107, 70, 193, 0.9);
+}
+
+.department-card p {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    margin: 0.5rem 0;
+    font-size: clamp(0.9rem, 1vw, 1rem);
+}
+
+.department-card p i {
+    color: rgba(107, 70, 193, 0.8);
+    margin-right: 0.5rem;
+}
+
+.department-card a {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: linear-gradient(135deg, rgba(107, 70, 193, 0.2), rgba(85, 60, 154, 0.2));
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.department-card a:hover {
+    background: linear-gradient(135deg, rgba(107, 70, 193, 0.3), rgba(85, 60, 154, 0.3));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(107, 70, 193, 0.2);
+}
+
+.department-card a i {
+    font-size: 1.1em;
+}
+
+/* Department Stats Styling */
+.department-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 0.5rem 0;
+}
+
+.department-stats p {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0 !important;
+    font-size: clamp(0.875rem, 0.95vw, 0.95rem);
+}
+
+.department-stats p i {
+    padding: 0.5rem;
+    background: rgba(107, 70, 193, 0.1);
+    border-radius: 50%;
+    font-size: 1em;
+    width: 2em;
+    height: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 !important;
+}
+
+.view-dept-link {
+    justify-content: center;
+    text-align: center;
+    font-weight: 600 !important;
+}
+
+.view-dept-link i {
+    transition: transform 0.3s ease;
+}
+
+.view-dept-link:hover i {
+    transform: translateX(4px);
+}
+
+/* Department Details Page Styling */
+.department-details {
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: clamp(2rem, 3vw, 3rem);
+    margin-bottom: 2rem;
+}
+
+.department-details p {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.8;
+    font-size: clamp(1rem, 1.1vw, 1.2rem);
+    margin-bottom: 1.5rem;
+}
+
+.department-details .hod-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(107, 70, 193, 0.1);
+    border-radius: 12px;
+    margin-top: 1.5rem;
+}
+
+.department-details .hod-info i {
+    font-size: 1.5em;
+    color: rgba(107, 70, 193, 0.9);
+}
+
+.department-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr));
+    gap: clamp(2rem, 3vw, 3rem);
+    margin-top: 2rem;
+}
+
+.department-sections section {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: clamp(1.5rem, 2vw, 2rem);
+}
+
+.department-sections h2 {
+    font-size: clamp(1.25rem, 1.5vw, 1.5rem);
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.department-sections h2 i {
+    color: rgba(107, 70, 193, 0.9);
+}
+
+.search-form {
+    margin: 1.5rem 0;
+    display: flex;
+    gap: 1rem;
+}
+
+.search-form input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.search-form button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    background: rgba(107, 70, 193, 0.2);
+    color: rgba(255, 255, 255, 0.9);
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.search-form button:hover {
+    background: rgba(107, 70, 193, 0.3);
+}
+
+.view-all {
+    margin-top: 1rem;
+    text-align: right;
+}
+
+.view-all a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+}
+
+.view-all a:hover {
+    background: rgba(107, 70, 193, 0.1);
+    color: rgba(255, 255, 255, 0.95);
+}
+
+/* Student Statistics */
+.student-stats {
+    margin-top: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.student-stats h3 {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.student-stats h3 i {
+    color: rgba(107, 70, 193, 0.9);
+}
+
+.semester-distribution {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.semester-stat {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.semester-label {
+    min-width: 100px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+}
+
+.semester-bar {
+    flex: 1;
+    height: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+.semester-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: var(--percentage);
+    background: linear-gradient(135deg, rgba(107, 70, 193, 0.7), rgba(107, 70, 193, 0.5));
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+.semester-bar .semester-count {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    z-index: 1;
+}
+
+/* Enhanced Search Input */
+.search-input-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+.search-input-wrapper i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(107, 70, 193, 0.7);
+    font-size: 1rem;
+}
+
+.search-input-wrapper input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.75rem;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+}
+
+.search-input-wrapper input:focus {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(107, 70, 193, 0.5);
+    box-shadow: 0 0 0 2px rgba(107, 70, 193, 0.2);
+}
+
+.search-input-wrapper input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Student Card Badge */
+.semester-count {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-left: 0.5rem;
+}
+
+/* Faculty Page Header and Filters */
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(107, 70, 193, 0.1);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.back-link:hover {
+    background: rgba(107, 70, 193, 0.2);
+    transform: translateX(-2px);
+}
+
+.faculty-filters {
+    margin-bottom: 2rem;
+}
+
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.no-results i {
+    font-size: 2.5rem;
+    color: rgba(107, 70, 193, 0.6);
+}
+
+.no-results p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+}
+
+.no-results .btn-glass {
+    margin-top: 1rem;
+}
+
+.student-count {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: rgba(107, 70, 193, 0.1);
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+}
+
+.student-count i {
+    font-size: 1.25em;
+    color: rgba(107, 70, 193, 0.9);
+}
+
+.student-count strong {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+/* Recent Students Cards */
+.recent-students {
+    margin-top: 1.5rem;
+}
+
+.recent-students h3 {
+    font-size: clamp(1.1rem, 1.3vw, 1.3rem);
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: rgba(107, 70, 193, 0.1);
+    border-radius: 8px;
+    width: fit-content;
+}
+
+.recent-students h3 i {
+    color: rgba(107, 70, 193, 0.9);
+    font-size: 1.2em;
+}
+
+.student-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1rem;
+}
+
+.student-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1.25rem;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.student-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(107, 70, 193, 0.1) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.student-card:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 30px rgba(107, 70, 193, 0.15);
+}
+
+.student-card:hover::before {
+    opacity: 1;
+}
+
+.student-name {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.95);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.student-name i {
+    color: rgba(107, 70, 193, 0.9);
+}
+
+.roll-number {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.75rem;
+    background: rgba(107, 70, 193, 0.1);
+    border-radius: 6px;
+    width: fit-content;
+}
+
+.semester {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.student-contact {
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.student-contact a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.student-contact a:hover {
+    color: rgba(107, 70, 193, 0.9);
+}
+
+.student-contact i {
+    padding: 0.4rem;
+    background: rgba(107, 70, 193, 0.1);
+    border-radius: 50%;
+    font-size: 0.8rem;
+    width: 1.8em;
+    height: 1.8em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Students Page Layout */
+.students-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.students-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.student-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.student-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(107, 70, 193, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.student-card:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 30px rgba(107, 70, 193, 0.15);
+}
+
+.student-card:hover::before {
+    opacity: 1;
+}
+
+.student-name {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.student-name i {
+    color: rgba(107, 70, 193, 0.9);
+    font-size: 1.1rem;
+}
+
+.roll-number {
+    background: rgba(107, 70, 193, 0.1);
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.department {
+    margin-top: 0.5rem;
+}
+
+.department a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.department a:hover {
+    color: rgba(107, 70, 193, 0.9);
+}
+
+.semester {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+}
+
+.semester-count {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-left: 0.25rem;
+}
+
+.student-contact {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.student-contact a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.student-contact a:hover {
+    color: rgba(107, 70, 193, 0.9);
+}
+
+.student-contact i {
+    background: rgba(107, 70, 193, 0.1);
+    padding: 0.5rem;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    width: 2em;
+    height: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Sorting Controls */
+.sort-options {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.sort-options span {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.sort-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.sort-buttons .btn-glass {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+.sort-buttons .btn-glass.active {
+    background: rgba(107, 70, 193, 0.2);
+    border-color: rgba(107, 70, 193, 0.3);
+}
+
+/* Print Instructions */
+.print-instructions {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+}
+
+.print-instructions p {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 1rem;
+}
+
+.print-instructions ol {
+    margin-left: 2rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.print-instructions li {
+    margin: 0.5rem 0;
+}
+
+/* No Results */
+.no-results {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.no-results i {
+    font-size: 2rem;
+    color: rgba(107, 70, 193, 0.9);
+}
+
+.no-results p {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 1rem;
+}
+
+/* Faculty Cards in Department Details */
+.faculty-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: clamp(1.5rem, 3vw, 2rem);
+    margin-top: 2rem;
+}
+
+.faculty-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.05) 100%);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: clamp(1.5rem, 2vw, 2rem);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.faculty-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(107, 70, 193, 0.08) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    transform: rotate(45deg);
+}
+
+.faculty-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+}
+
+.faculty-card:hover::before {
+    opacity: 1;
+}
+
+.faculty-header {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.faculty-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(107, 70, 193, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: rgba(107, 70, 193, 0.9);
+    border: 2px solid rgba(107, 70, 193, 0.2);
+    overflow: hidden;
+}
+
+.faculty-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.faculty-info {
+    flex: 1;
+}
+
+.faculty-name {
+    font-size: clamp(1.25rem, 1.5vw, 1.5rem);
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.faculty-designation {
+    color: rgba(107, 70, 193, 0.9);
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.faculty-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.faculty-detail-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+}
+
+.faculty-detail-item i {
+    color: rgba(107, 70, 193, 0.8);
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+.faculty-contact {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.25rem;
+}
+
+.faculty-contact a {
+    padding: 0.5rem;
+    border-radius: 8px;
+    background: rgba(107, 70, 193, 0.1);
+    color: rgba(107, 70, 193, 0.9);
+    transition: all 0.3s ease;
+}
+
+.faculty-contact a:hover {
+    background: rgba(107, 70, 193, 0.2);
+    transform: translateY(-2px);
+}
+
+.faculty-contact i {
+    font-size: 1.25rem;
+}
+
+/* Documentation Glass Effects */
+.docs-content {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+}
+
+.docs-sidebar {
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+}
+
+.markdown-content pre {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.markdown-content code {
+    background: rgba(107, 70, 193, 0.2);
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.doc-link.active {
+    background: rgba(107, 70, 193, 0.2);
+    border: 1px solid rgba(107, 70, 193, 0.3);
+}
+
+/* Checkbox styling */
+.checkbox-group {
+    margin: 15px 0;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    padding: 8px 0;
+}
+
+.checkbox-container input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: relative;
+    height: 20px;
+    width: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+
+.checkbox-container:hover .checkmark {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(107, 70, 193, 0.5);
+}
+
+.checkbox-container input[type="checkbox"]:checked ~ .checkmark {
+    background: rgba(107, 70, 193, 0.2);
+    border-color: rgba(107, 70, 193, 0.5);
+}
+
+.checkmark:after {
+    content: '';
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid rgba(107, 70, 193, 1);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkbox-container input[type="checkbox"]:checked ~ .checkmark:after {
+    display: block;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.checkbox-label i {
+    color: rgba(107, 70, 193, 0.9);
+}
+@media print {
+    .students-controls,
+    .print-instructions,
+    .back-link {
+        display: none;
+    }
+
+    .students-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .student-card {
+        break-inside: avoid;
+        background: none;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .student-card::before {
+        display: none;
+    }
+
+    .student-name,
+    .roll-number,
+    .department a,
+    .semester,
+    .student-contact a {
+        color: #000;
+    }
+}

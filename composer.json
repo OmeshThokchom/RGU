@@ -1,0 +1,53 @@
+{
+    "name": "rgu/portal",
+    "description": "A university portal system developed as a DBMS course assignment for Royal Global University",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "THOKCHOM DAYANANDA",
+            "email": "thokchomdayananda54@gmail.com",
+            "role": "Developer",
+            "homepage": "https://github.com/OmeshThokchom"
+        }
+    ],
+    "homepage": "https://github.com/OmeshThokchom/rgu-portal",
+    "support": {
+        "issues": "https://github.com/OmeshThokchom/rgu-portal/issues",
+        "source": "https://github.com/OmeshThokchom/rgu-portal"
+    },
+    "require": {
+        "php": ">=7.4",
+        "erusev/parsedown": "^1.7",
+        "ext-mysqli": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "phpstan/phpstan": "^1.4",
+        "squizlabs/php_codesniffer": "^3.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "RGU\\Portal\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "RGU\\Portal\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "check": "phpstan analyse",
+        "cs": "phpcs",
+        "fix": "phpcbf"
+    },
+    "config": {
+        "sort-packages": true,
+        "optimize-autoloader": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
