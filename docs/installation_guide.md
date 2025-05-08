@@ -6,9 +6,8 @@ Before installing the RGU Portal, ensure you have the following software install
 
 - PHP 7.4 or higher
 - MySQL 5.7 or higher
-- Python 3.8 or higher
-- Composer (PHP package manager)
-- OpenSSL
+
+The setup script will automatically install Composer if it's not already present.
 
 ## Installation Steps
 
@@ -23,20 +22,16 @@ Before installing the RGU Portal, ensure you have the following software install
    chmod +x setup.sh
    ```
 
-3. Run the setup script:
+3. Run the setup script with sudo:
    ```bash
-   ./setup.sh
+   sudo ./setup.sh
    ```
 
-   The setup script will:
-   - Check for required software
-   - Create necessary directories
-   - Install PHP dependencies
-   - Set up Python virtual environment
-   - Create configuration files
-   - Set up the database
-   - Generate encryption keys
-   - Import database schema
+   The script requires sudo privileges to:
+   - Install Composer globally
+   - Create and set permissions on directories
+   - Set proper file ownership
+   - Configure the database
 
 4. During setup, you will be prompted for:
    - MySQL root password
@@ -44,57 +39,64 @@ Before installing the RGU Portal, ensure you have the following software install
    - Database user (default: rgu_user)
    - Database password
 
+## Starting the Server
+
+After installation, start the PHP development server with:
+```bash
+sudo php -S localhost:8000
+```
+
 ## Troubleshooting
 
 ### Common Issues
 
-1. **MySQL Connection Failed**
-   - Verify MySQL is running: `systemctl status mysql`
+1. **Permission Denied Errors**
+   - Ensure you're running the setup script with sudo
+   - Check if www-data user exists on your system
+   - Verify directory ownership: `ls -la`
+
+2. **Composer Installation Failed**
+   - Check your internet connection
+   - Ensure PHP is properly installed
+   - Try running manually with sudo:
+     ```bash
+     sudo php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+     sudo php composer-setup.php
+     sudo mv composer.phar /usr/local/bin/composer
+     ```
+
+3. **MySQL Connection Failed**
+   - Verify MySQL is running: `sudo systemctl status mysql`
    - Check root password is correct
    - Ensure MySQL user has proper permissions
 
-2. **PHP Dependencies Installation Failed**
-   - Check internet connection
-   - Run `composer install --no-dev` manually
-   - Verify PHP version compatibility
-
-3. **Python Virtual Environment Issues**
-   - Ensure python3-venv is installed
-   - Try creating venv manually: `python3 -m venv venv`
-   - Activate venv: `source venv/bin/activate`
-
-4. **Permission Issues**
-   - Ensure proper permissions on directories:
+4. **Directory Permission Issues**
+   - Verify permissions are set correctly:
      ```bash
-     chmod -R 777 uploads storage logs sessions
+     sudo chmod -R 777 uploads storage logs sessions
+     sudo chown -R www-data:www-data uploads
      ```
-   - Check file ownership matches web server user
 
 ### Directory Structure
 
 After installation, verify these directories exist and have proper permissions:
 ```
 argu-portal/
-├── uploads/
+├── uploads/          (777, www-data:www-data)
 │   ├── students/
 │   ├── faculty/
 │   ├── departments/
 │   └── events/
-├── storage/
-├── logs/
-└── sessions/
+├── storage/          (777, www-data:www-data)
+├── logs/            (777, www-data:www-data)
+└── sessions/        (777, www-data:www-data)
 ```
 
 ## Post-Installation
 
-1. Start the development server:
-   ```bash
-   python server.py
-   ```
+1. Access the portal at: http://localhost:8000
 
-2. Access the portal at: http://localhost:8000
-
-3. Default admin credentials:
+2. Default admin credentials:
    - Username: admin
    - Password: admin123
 
@@ -129,4 +131,4 @@ If you encounter any issues during installation:
 
 1. Check the error.log file in the logs directory
 2. Verify system information matches requirements
-3. Contact system administrator or refer to technical documentation
+3. Check MySQL logs for database-related issues

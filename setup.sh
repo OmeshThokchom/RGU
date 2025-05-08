@@ -9,10 +9,37 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
+# Check if script is run with sudo
+if [ "$EUID" -ne 0 ]; then 
+    echo -e "${RED}Please run this script with sudo${NC}"
+    exit 1
+fi
+
 echo -e "${GREEN}Starting RGU Portal Setup...${NC}\n"
 
-# Check for required software
-echo -e "${YELLOW}Checking prerequisites...${NC}"
+# Function to check and install composer
+install_composer() {
+    if ! command -v composer &> /dev/null; then
+        echo -e "${YELLOW}Installing Composer...${NC}"
+        EXPECTED_CHECKSUM="$(php -r 'copy("https://composer.github.io/installer.sig", "php://stdout");')"
+        php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+        ACTUAL_CHECKSUM="$(php -r "echo hash_file('sha384', 'composer-setup.php');")"
+
+        if [ "$EXPECTED_CHECKSUM" != "$ACTUAL_CHECKSUM" ]; then
+            echo -e "${RED}Composer installer corrupt${NC}"
+            rm composer-setup.php
+            exit 1
+        fi
+
+        php composer-setup.php --quiet
+        rm composer-setup.php
+        mv composer.phar /usr/local/bin/composer
+        chmod +x /usr/local/bin/composer
+        echo -e "${GREEN}Composer installed successfully!${NC}"
+    else
+        echo -e "${GREEN}Composer is already installed${NC}"
+    fi
+}
 
 # Function to check prerequisites
 check_prerequisite() {
@@ -22,38 +49,27 @@ check_prerequisite() {
     fi
 }
 
-# Check all required software
+# Check for PHP and MySQL
+echo -e "${YELLOW}Checking prerequisites...${NC}"
 check_prerequisite "php"
-check_prerequisite "composer"
 check_prerequisite "mysql"
-check_prerequisite "python3"
 
-echo -e "${GREEN}All prerequisites met!${NC}\n"
+# Install Composer first
+install_composer
 
 # Create necessary directories safely
 echo -e "${YELLOW}Creating required directories...${NC}"
 for dir in uploads storage logs sessions; do
     mkdir -p "$dir"
     chmod 777 "$dir"
+    # Set proper ownership
+    chown -R www-data:www-data "$dir"
 done
 
 # Install PHP dependencies with error handling
 echo -e "${YELLOW}Installing PHP dependencies...${NC}"
-if ! composer install --no-dev; then
+if ! sudo -u $(logname) composer install --no-dev; then
     echo -e "${RED}Failed to install PHP dependencies. Please check your internet connection and try again.${NC}"
-    exit 1
-fi
-
-# Setup Python virtual environment with error handling
-echo -e "${YELLOW}Setting up Python environment...${NC}"
-if ! python3 -m venv venv; then
-    echo -e "${RED}Failed to create Python virtual environment. Please check your Python installation.${NC}"
-    exit 1
-fi
-
-source venv/bin/activate
-if ! pip install -r requirements.txt; then
-    echo -e "${RED}Failed to install Python requirements. Please check your internet connection and try again.${NC}"
     exit 1
 fi
 
@@ -65,6 +81,7 @@ for config in ".env" "config.php"; do
     example="${config%.php}.example${config##*.}"
     if [ ! -f "$config" ] && [ -f "$example" ]; then
         cp "$example" "$config"
+        chown $(logname):$(logname) "$config"
         echo -e "${GREEN}Created $config file${NC}"
     elif [ ! -f "$example" ]; then
         echo -e "${RED}Missing $example file. Please ensure all example configuration files are present.${NC}"
@@ -116,6 +133,8 @@ for file in ".env" "config.php"; do
         sed -i.bak "s/'DB_USER',.*/'DB_USER', '$dbuser'/" "$file" 2>/dev/null || true
         sed -i.bak "s/'DB_PASS',.*/'DB_PASS', '$dbpass'/" "$file" 2>/dev/null || true
         rm -f "$file.bak"
+        # Ensure proper ownership
+        chown $(logname):$(logname) "$file"
     fi
 done
 
@@ -125,6 +144,7 @@ for dir in students faculty departments events; do
     mkdir -p "uploads/$dir"
 done
 chmod -R 777 uploads
+chown -R www-data:www-data uploads
 
 # Generate encryption key securely
 echo -e "${YELLOW}Generating encryption key...${NC}"
@@ -146,23 +166,28 @@ fi
 
 # Verify setup
 echo -e "${YELLOW}Verifying setup...${NC}"
-if ! php -r "include 'config.php'; \$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME) or die('Database connection failed');" 2>/dev/null; then
+if ! sudo -u $(logname) php -r "include 'config.php'; \$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME) or die('Database connection failed');" 2>/dev/null; then
     echo -e "${RED}Database connection verification failed. Please check your configuration.${NC}"
     exit 1
 fi
 
+# Fix final permissions
+find . -type f -exec chmod 644 {} \;
+find . -type d -exec chmod 755 {} \;
+chmod -R 777 uploads storage logs sessions
+
 # Setup complete with success verification
 echo -e "\n${GREEN}Setup completed successfully!${NC}"
 echo -e "\n${YELLOW}Next steps:${NC}"
-echo -e "1. Start the development server: ${YELLOW}python server.py${NC}"
+echo -e "1. Start the PHP server: ${YELLOW}sudo php -S localhost:8000${NC}"
 echo -e "2. Access the portal at: ${YELLOW}http://localhost:8000${NC}"
 echo -e "3. Default admin credentials:"
 echo -e "   Username: ${YELLOW}admin${NC}"
 echo -e "   Password: ${YELLOW}admin123${NC}"
 echo -e "\n${RED}IMPORTANT: Change the default admin password after first login!${NC}"
 
-# Optional: Display system info for debugging
+# Display system info for debugging
 echo -e "\n${YELLOW}System Information:${NC}"
 echo -e "PHP Version: $(php -v | head -n1)"
-echo -e "Python Version: $(python3 --version)"
 echo -e "MySQL Version: $(mysql --version)"
+echo -e "Composer Version: $(composer --version)"
