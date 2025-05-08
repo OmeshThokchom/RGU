@@ -636,6 +636,65 @@ body:not(.admin-body) .main-footer {
     background: var(--primary-color);
 }
 
+/* Enhanced Back Link */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    background: linear-gradient(135deg, rgba(107, 70, 193, 0.2) 0%, rgba(85, 60, 154, 0.2) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.95);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.back-link:hover {
+    background: linear-gradient(135deg, rgba(107, 70, 193, 0.3) 0%, rgba(85, 60, 154, 0.3) 100%);
+    transform: translateX(-4px);
+    box-shadow: 0 4px 15px rgba(107, 70, 193, 0.2);
+    color: white;
+}
+
+.back-link i {
+    font-size: 1.1em;
+    transition: transform 0.3s ease;
+}
+
+.back-link:hover i {
+    transform: translateX(-4px);
+}
+
+/* Enhanced Faculty Contact Links */
+.faculty-info a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    background: rgba(107, 70, 193, 0.15);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.faculty-info a:hover {
+    background: rgba(107, 70, 193, 0.25);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(107, 70, 193, 0.2);
+}
+
+.faculty-info a i {
+    color: rgba(107, 70, 193, 0.9);
+}
+
+.faculty-info a:hover i {
+    color: white;
+}
+
 @media (max-width: 768px) {
     body:not(.admin-body) .header-content {
         flex-direction: column;

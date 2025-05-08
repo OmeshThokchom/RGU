@@ -1267,10 +1267,6 @@ body:not(.admin-body) .notice-item .important-badge {
     transform: translateY(-2px);
 }
 
-.faculty-contact i {
-    font-size: 1.25rem;
-}
-
 /* Documentation Glass Effects */
 .docs-content {
     background: rgba(255, 255, 255, 0.05);
@@ -1404,4 +1400,52 @@ body:not(.admin-body) .notice-item .important-badge {
     .student-contact a {
         color: #000;
     }
+}
+
+/* Faculty card enhancements */
+.faculty-card .department p a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: rgba(107, 70, 193, 0.1);
+    border-radius: 6px;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.faculty-card .department p a:hover {
+    background: rgba(107, 70, 193, 0.2);
+    color: white;
+    transform: translateX(4px);
+}
+
+.faculty-card .department p a i {
+    color: rgba(107, 70, 193, 0.8);
+    font-size: 1.1em;
+}
+
+.faculty-card .department p a:hover i {
+    color: white;
+}
+
+.faculty-card .contact-info a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(107, 70, 193, 0.1);
+    border-radius: 6px;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin: 0.25rem 0;
+}
+
+.faculty-card .contact-info a:hover {
+    background: rgba(107, 70, 193, 0.2);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(107, 70, 193, 0.15);
 }

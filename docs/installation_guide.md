@@ -13,8 +13,8 @@ Before installing the RGU Portal, ensure you have the following:
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
-   cd argu-portal
+   git clone https://github.com/OmeshThokchom/RGU.git
+   cd RGU
    ```
 
 2. Make the setup script executable:
@@ -51,18 +51,72 @@ No additional configuration is needed for basic setup.
 
 ## Directory Structure
 
-After installation, the following directories will be created with proper permissions:
+After installation, you will have the following directory structure:
 ```
-argu-portal/
-├── uploads/          (777, www-data:www-data)
-│   ├── students/
-│   ├── faculty/
-│   ├── departments/
-│   └── events/
-├── storage/          (777, www-data:www-data)
-└── logs/            (777, www-data:www-data)
+RGU/
+├── admin/          
+│   ├── includes/
+│   ├── ajax_handlers.php
+│   ├── departments.php
+│   ├── documentation.php
+│   ├── events.php
+│   ├── faculty.php
+│   ├── index.php
+│   ├── login.php
+│   ├── logout.php
+│   ├── notices.php
+│   └── students.php
+├── assets/ 
+│   ├── css/
+│   │   ├── glass.css
+│   │   └── style.css
+│   ├── images/
+│   │   ├── campus.jpg
+│   │   ├── favicon.ico
+│   │   └── logo-dark.png
+│   └── js/
+│       ├── admin.js
+│       ├── glass-ui.js
+│       └── main.js
+├── docs/
+│   ├── api_documentation.md
+│   ├── CHANGELOG.md
+│   ├── CODE_OF_CONDUCT.md
+│   ├── CONTRIBUTING.md
+│   ├── CONTRIBUTORS.md
+│   ├── dbms_documentation.md
+│   ├── development_standards.md
+│   ├── documentation.md
+│   ├── installation_guide.md
+│   ├── SECURITY.md
+│   ├── technical_guide.md
+│   ├── user_guide.md
+│   ├── viva_preparation.md
+│   └── workflow.md
+├── includes/
+│   ├── header.php
+│   └── footer.php
+├── pages/
+│   ├── departments.php
+│   ├── events.php
+│   ├── faculties.php
+│   ├── notices.php
+│   └── students.php
+|── vendor/
+|    └── [vendor dependencies]
+├── .env.example
+├── config.example.php
+├── index.php
+├── README.md
+|── composer.json
+|── composer.lock
+├── db_config.php
+├── error.log
+├── requirements.txt
+├── server.py
+├── setup.sh
+└── .gitignore
 ```
-
 ## Starting the Server
 
 After installation, start the PHP development server:

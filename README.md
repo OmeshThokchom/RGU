@@ -10,11 +10,14 @@ A comprehensive web-based portal system for Royal Global University, developed a
 
 ## Screenshots
 
-### Admin Dashboard
-![Admin Dashboard](screenshots/dashboards.png)
+### CLIENT Dashboard
+![CLIENT Dashboard](screenshots/public_department_page.png)
 
-### Student Portal
-![Student Portal](screenshots/terminal.png)
+### Server Monitoring
+![Server Monitoring](screenshots/terminal.png)
+
+### Admin Dashboard
+![Admin Dashboard](screenshots/admin_page.png)
 
 ## Project Information
 
@@ -22,17 +25,27 @@ A comprehensive web-based portal system for Royal Global University, developed a
 - **Course**: B.Tech Computer Science & Engineering
 - **Semester**: 4th Semester
 - **Subject**: Database Management Systems (DBMS)
-- **Institution**: Royal Global University
+- **Institution**: Royal Global University, Guwahati, Assam
+- **Project Type**: Personal Academic Project
+- **Project Duration**: 4th Semester (2025)
+- **Project Start Date**: 7th may 2025
+- **Project Completion Date**: 8th May 2025
 
 ### Developer
 - **Name**: THOKCHOM DAYANANDA
 - **Role**: Student Developer
 - **GitHub**: [OmeshThokchom](https://github.com/OmeshThokchom)
 - **Email**: thokchomdayananda54@gmail.com
+- **huggingface**: [DayanandaThokchom](https://huggingface.co/DayanandaThokchom)
+
+
 
 ### Course Instructor
 - **Name**: Dr. Sourabh
 - **Department**: Computer Science & Engineering
+- **Institution**: Royal Global University, Guwahati, Assam
+- **Email**:
+
 
 ## Quick Start
 
@@ -44,8 +57,8 @@ A comprehensive web-based portal system for Royal Global University, developed a
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd argu-portal
+git clone https://github.com/OmeshThokchom/RGU.git
+cd RGu
 ```
 
 2. Make setup script executable:

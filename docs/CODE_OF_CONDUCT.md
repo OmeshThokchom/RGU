@@ -6,7 +6,6 @@ This is a personal academic project developed as part of the Database Management
 ## Standards of Development
 
 As the developer of this project, I commit to:
-
 * Writing clean, well-documented code
 * Following database security best practices
 * Protecting user data and privacy
@@ -38,7 +37,7 @@ As this is an academic project, I commit to:
 - GitHub: [OmeshThokchom](https://github.com/OmeshThokchom)
 
 ### Course Information
-- Institution: Royal Global University
+- Institution: Royal Global University, Guwahati, Assam
 - Department: Computer Science & Engineering
 - Course: Database Management Systems (DBMS)
 - Semester: 4th Semester

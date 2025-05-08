@@ -1,8 +1,12 @@
-# Contributing to RGU Portal
+# Contributing to ARGU Portal
 
-## Code of Conduct
+## Project Context
+This is a personal academic project developed for the Database Management Systems (DBMS) course at Royal Global University.
 
-This project and everyone participating in it is governed by the RGU Code of Conduct. By participating, you are expected to uphold this code. Please report unacceptable behavior to conduct@rgu.ac.in.
+## Developer Contact
+- **Name**: THOKCHOM DAYANANDA
+- **GitHub**: [OmeshThokchom](https://github.com/OmeshThokchom)
+- **Email**: thokchomdayananda54@gmail.com
 
 ## Getting Started
 
@@ -15,9 +19,9 @@ This project and everyone participating in it is governed by the RGU Code of Con
 
 ### Development Setup
 ```bash
-# Fork the repository
-git clone https://github.com/your-username/rgu-portal.git
-cd rgu-portal
+# Clone the repository
+git clone https://github.com/OmeshThokchom/RGU.git
+cd RGU
 
 # Create branch
 git checkout -b feature/your-feature-name
@@ -35,175 +39,54 @@ python server.py
 
 ## Development Process
 
-### 1. Pick an Issue
-- Check existing issues
-- Create new issue if needed
-- Get issue assigned to you
-- Discuss approach if needed
+### 1. Making Changes
+1. Create a feature branch
+2. Write clean, well-documented code
+3. Test your changes thoroughly
+4. Update documentation as needed
 
-### 2. Development Standards
-Follow our [Development Standards](development_standards.md) guide for:
-- Code style
-- Documentation
-- Testing
-- Security measures
+### 2. Commit Guidelines
 
-### 3. Making Changes
-1. Create feature branch
-2. Write code following standards
-3. Add tests
-4. Update documentation
-5. Commit changes
-
-### 4. Commit Guidelines
-
-#### Commit Message Format
+Use clear commit messages that describe your changes:
 ```
-<type>(<scope>): <subject>
-
-<body>
-
-<footer>
+feat: add bulk import feature
+fix: resolve login validation issue
+docs: update setup instructions
 ```
 
-#### Types
-- feat: New feature
-- fix: Bug fix
-- docs: Documentation
-- style: Formatting
-- refactor: Code restructure
-- test: Tests
-- chore: Maintenance
+### 3. Pull Request Process
+1. Ensure your code is tested
+2. Update relevant documentation
+3. Create a clear PR description
+4. Wait for review
 
-#### Example
-```
-feat(students): add bulk import feature
+## Testing
 
-- Add CSV import functionality
-- Validate student data
-- Handle duplicate entries
-
-Closes #123
-```
-
-### 5. Pull Request Process
-1. Update documentation
-2. Run all tests
-3. Update CHANGELOG.md
-4. Create detailed PR description
-5. Request code review
-6. Address feedback
-
-## Testing Guidelines
-
-### Running Tests
+Run tests using:
 ```bash
-# Run all tests
 vendor/bin/phpunit
-
-# Run specific test
-vendor/bin/phpunit tests/StudentTest.php
 ```
 
-### Writing Tests
-```php
-class StudentTest extends TestCase
-{
-    public function testStudentCreation()
-    {
-        $data = [
-            'first_name' => 'John',
-            'last_name' => 'Doe'
-        ];
-        
-        $student = new Student($data);
-        $this->assertEquals('John Doe', $student->getFullName());
-    }
-}
-```
+## Questions and Support
 
-## Documentation
-
-### Code Documentation
-```php
-/**
- * Process student registration
- *
- * @param array $data Student information
- * @param int $deptId Department identifier
- * @return Student|null
- * @throws ValidationException
- */
-```
-
-### Update Documentation
-1. README.md for changes
-2. API documentation
-3. User guides
-4. Installation steps
-
-## Review Process
-
-### Code Review Checklist
-- [ ] Follows coding standards
-- [ ] Tests included
-- [ ] Documentation updated
-- [ ] Security considered
-- [ ] Performance checked
-
-### Review Comments
-- Be specific
-- Be constructive
-- Provide examples
-- Explain reasoning
-
-## Release Process
-
-### Version Numbers
-- MAJOR.MINOR.PATCH
-- Major: Breaking changes
-- Minor: New features
-- Patch: Bug fixes
-
-### Release Steps
-1. Update version
-2. Update CHANGELOG.md
-3. Create release branch
-4. Run final tests
-5. Create release tag
-6. Deploy to staging
-7. Deploy to production
-
-## Support
-
-### Questions
-- Check documentation
-- Search existing issues
-- Ask in discussions
-- Contact support@rgu.ac.in
-
-### Reporting Bugs
+For questions or issues:
 1. Check existing issues
-2. Create detailed report
-3. Include reproduction steps
-4. Provide environment details
-5. Add relevant logs
-
-## Recognition
-
-### Contributors
-- Listed in CONTRIBUTORS.md
-- Mentioned in release notes
-- Acknowledged in documentation
-
-### Contact
-- Technical: tech@rgu.ac.in
-- Support: support@rgu.ac.in
-- Security: security@rgu.ac.in
+2. Create a new issue with clear details
+3. Use discussions for general questions
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is under MIT License - see the [LICENSE](LICENSE) file.
 
 ## Version
 Contributing Guide v1.0.0
-Last Updated: 2025-05-08
+Last Updated: 2023-12-08
+Project Timeline: May 2025
+
+### Database Configuration
+- Database Name: rgu_portal
+- Database User: rgu_user
+- Database Password: rgu_password123
+
+### Admin Access
+- Username: admin
+- Password: admin123
