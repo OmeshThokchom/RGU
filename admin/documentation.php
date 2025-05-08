@@ -1,6 +1,6 @@
 <?php
 require_once('includes/header.php');
-require_once(__DIR__ . '/../vendor/erusev/parsedown/Parsedown.php');
+require_once('../vendor/erusev/parsedown/Parsedown.php');
 
 // Initialize Parsedown
 $parsedown = new Parsedown();
