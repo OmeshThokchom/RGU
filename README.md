@@ -2,6 +2,20 @@
 
 A comprehensive web-based portal system for Royal Global University, developed as a Database Management Systems (DBMS) course project.
 
+## Project Status
+
+![Build Status](https://github.com/dayananda/rgu-portal/workflows/CI/badge.svg)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Version](https://img.shields.io/badge/version-1.0.0-green.svg)
+
+## Screenshots
+
+### Admin Dashboard
+![Admin Dashboard](screenshots/dashboards.png)
+
+### Student Portal
+![Student Portal](screenshots/terminal.png)
+
 ## Project Information
 
 ### Academic Context
@@ -150,20 +164,6 @@ This project demonstrates proficiency in:
 4. Web application development
 5. System security implementation
 6. Documentation practices
-
-## Project Status
-
-![Build Status](https://github.com/dayananda/rgu-portal/workflows/CI/badge.svg)
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Version](https://img.shields.io/badge/version-1.0.0-green.svg)
-
-## Screenshots
-
-### Admin Dashboard
-![Admin Dashboard](screenshots/dashboard.png)
-
-### Student Portal
-![Student Portal](screenshots/terminal.png)
 
 ## Acknowledgments
 
