@@ -53,24 +53,33 @@ dbname="rgu_portal"
 dbuser="rgu_user"
 dbpass="rgu_password123"  # Default password
 
+# Get MySQL root password
+echo -e "${YELLOW}MySQL root authentication required${NC}"
+read -s -p "Enter MySQL root password: " rootpass
+echo
+
 # Database setup
 echo -e "${YELLOW}Setting up database...${NC}"
 
 # Create database and user with error handling
 echo -e "${YELLOW}Creating database and user...${NC}"
-mysql << EOF
+if ! mysql -u root -p"$rootpass" << EOF
 CREATE DATABASE IF NOT EXISTS \`$dbname\`;
 CREATE USER IF NOT EXISTS '$dbuser'@'localhost' IDENTIFIED BY '$dbpass';
 GRANT ALL PRIVILEGES ON \`$dbname\`.* TO '$dbuser'@'localhost';
 FLUSH PRIVILEGES;
 EOF
+then
+    echo -e "${RED}Failed to create database and user. Please check your MySQL root password and permissions.${NC}"
+    exit 1
+fi
 
 # Update config file with database credentials
 echo -e "${YELLOW}Updating configuration...${NC}"
 if [ -f "config.php" ]; then
-    sed -i.bak "s/'DB_NAME',.*/'DB_NAME', '$dbname'/" "config.php"
-    sed -i.bak "s/'DB_USER',.*/'DB_USER', '$dbuser'/" "config.php"
-    sed -i.bak "s/'DB_PASS',.*/'DB_PASS', '$dbpass'/" "config.php"
+    sed -i.bak "s/DB_NAME=.*/DB_NAME=$dbname/" "config.php"
+    sed -i.bak "s/DB_USER=.*/DB_USER=$dbuser/" "config.php"
+    sed -i.bak "s/DB_PASS=.*/DB_PASS=$dbpass/" "config.php"
     rm -f "config.php.bak"
 fi
 

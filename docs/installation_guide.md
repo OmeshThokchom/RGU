@@ -2,10 +2,12 @@
 
 ## Prerequisites
 
-Before installing the RGU Portal, ensure you have the following software installed on your system:
+Before installing the RGU Portal, ensure you have the following:
 
 - PHP 7.4 or higher
 - MySQL 5.7 or higher
+- MySQL root password
+- Sudo privileges
 
 ## Installation Steps
 
@@ -24,6 +26,9 @@ Before installing the RGU Portal, ensure you have the following software install
    ```bash
    sudo ./setup.sh
    ```
+
+   During setup you will be prompted for:
+   - MySQL root password (required for database creation)
 
 The setup script will automatically:
 - Create necessary directories
@@ -71,15 +76,15 @@ Access the portal at: http://localhost:8000
 
 ### Common Issues
 
-1. **Permission Denied Errors**
+1. **MySQL Access Denied**
+   - Make sure you have the correct MySQL root password
+   - Verify MySQL is running: `sudo systemctl status mysql`
+   - Check MySQL root user permissions
+
+2. **Permission Denied Errors**
    - Verify you're running setup script with sudo
    - Check directory permissions with `ls -la`
    - Ensure www-data user exists on your system
-
-2. **MySQL Connection Failed**
-   - Check if MySQL service is running: `sudo systemctl status mysql`
-   - Verify database credentials in config.php
-   - Check MySQL logs for errors
 
 3. **Directory Permission Issues**
    - Fix permissions manually if needed:
