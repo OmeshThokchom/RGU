@@ -11,7 +11,7 @@ A comprehensive web-based portal system for Royal Global University, developed a
 ## Screenshots
 
 ### CLIENT Dashboard
-![CLIENT Dashboard](screenshots/public_department_page.png)
+![CLIENT Dashboard](screenshots/public_deparetment_page.png)
 
 ### Server Monitoring
 ![Server Monitoring](screenshots/terminal.png)
