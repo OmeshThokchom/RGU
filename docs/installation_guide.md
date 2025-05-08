@@ -7,8 +7,6 @@ Before installing the RGU Portal, ensure you have the following software install
 - PHP 7.4 or higher
 - MySQL 5.7 or higher
 
-The setup script will automatically install Composer if it's not already present.
-
 ## Installation Steps
 
 1. Clone the repository:
@@ -27,59 +25,28 @@ The setup script will automatically install Composer if it's not already present
    sudo ./setup.sh
    ```
 
-   The script requires sudo privileges to:
-   - Install Composer globally
-   - Create and set permissions on directories
-   - Set proper file ownership
-   - Configure the database
+The setup script will automatically:
+- Create necessary directories
+- Configure database with default credentials
+- Import database schema
+- Set proper file permissions
 
-4. During setup, you will be prompted for:
-   - MySQL root password
-   - Database name (default: rgu_portal)
-   - Database user (default: rgu_user)
-   - Database password
+No additional configuration is needed for basic setup.
 
-## Starting the Server
+## Default Credentials
 
-After installation, start the PHP development server with:
-```bash
-sudo php -S localhost:8000
-```
+### Database Settings
+- Database Name: rgu_portal
+- Database User: rgu_user
+- Database Password: rgu_password123
 
-## Troubleshooting
+### Admin Access
+- Username: admin
+- Password: admin123
 
-### Common Issues
+## Directory Structure
 
-1. **Permission Denied Errors**
-   - Ensure you're running the setup script with sudo
-   - Check if www-data user exists on your system
-   - Verify directory ownership: `ls -la`
-
-2. **Composer Installation Failed**
-   - Check your internet connection
-   - Ensure PHP is properly installed
-   - Try running manually with sudo:
-     ```bash
-     sudo php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-     sudo php composer-setup.php
-     sudo mv composer.phar /usr/local/bin/composer
-     ```
-
-3. **MySQL Connection Failed**
-   - Verify MySQL is running: `sudo systemctl status mysql`
-   - Check root password is correct
-   - Ensure MySQL user has proper permissions
-
-4. **Directory Permission Issues**
-   - Verify permissions are set correctly:
-     ```bash
-     sudo chmod -R 777 uploads storage logs sessions
-     sudo chown -R www-data:www-data uploads
-     ```
-
-### Directory Structure
-
-After installation, verify these directories exist and have proper permissions:
+After installation, the following directories will be created with proper permissions:
 ```
 argu-portal/
 ├── uploads/          (777, www-data:www-data)
@@ -88,47 +55,73 @@ argu-portal/
 │   ├── departments/
 │   └── events/
 ├── storage/          (777, www-data:www-data)
-├── logs/            (777, www-data:www-data)
-└── sessions/        (777, www-data:www-data)
+└── logs/            (777, www-data:www-data)
 ```
 
-## Post-Installation
+## Starting the Server
 
-1. Access the portal at: http://localhost:8000
+After installation, start the PHP development server:
+```bash
+sudo php -S localhost:8000
+```
 
-2. Default admin credentials:
-   - Username: admin
-   - Password: admin123
+Access the portal at: http://localhost:8000
 
-   **IMPORTANT**: Change the default admin password immediately after first login!
+## Troubleshooting
 
-## Security Recommendations
+### Common Issues
 
-1. Update default admin password
-2. Set proper file permissions in production
-3. Configure secure MySQL passwords
-4. Enable HTTPS in production
-5. Regular backups of database and uploads
+1. **Permission Denied Errors**
+   - Verify you're running setup script with sudo
+   - Check directory permissions with `ls -la`
+   - Ensure www-data user exists on your system
+
+2. **MySQL Connection Failed**
+   - Check if MySQL service is running: `sudo systemctl status mysql`
+   - Verify database credentials in config.php
+   - Check MySQL logs for errors
+
+3. **Directory Permission Issues**
+   - Fix permissions manually if needed:
+     ```bash
+     sudo chmod -R 777 uploads storage logs
+     sudo chown -R www-data:www-data uploads storage logs
+     ```
 
 ## Production Deployment
 
-For production deployment, additional steps are recommended:
+For production environments, take these additional steps:
 
-1. Update .env file:
-   - Set APP_ENV=production
-   - Set APP_DEBUG=false
-   - Configure proper APP_URL
+1. Change Default Passwords
+   - Update admin password through the interface
+   - Change MySQL user password
+   - Update config.php with new credentials
 
-2. Set up a proper web server (Apache/Nginx)
-3. Configure SSL certificate
-4. Set up regular backups
-5. Configure proper file permissions
-6. Set up monitoring
+2. Secure the Installation
+   - Set restrictive file permissions
+   - Configure HTTPS
+   - Enable MySQL SSL connections
+   - Set up proper firewall rules
+
+3. Configure Web Server
+   - Set up Apache/Nginx
+   - Configure virtual hosts
+   - Enable SSL certificates
+
+4. Regular Maintenance
+   - Set up automated backups
+   - Configure log rotation
+   - Monitor system resources
 
 ## Support
 
-If you encounter any issues during installation:
+If you encounter issues:
 
-1. Check the error.log file in the logs directory
-2. Verify system information matches requirements
-3. Check MySQL logs for database-related issues
+1. Check error.log in the logs directory
+2. Review MySQL error logs
+3. Verify system requirements
+4. Ensure proper file permissions
+
+For academic project inquiries:
+- Email: thokchomdayananda54@gmail.com
+- GitHub: [OmeshThokchom](https://github.com/OmeshThokchom)

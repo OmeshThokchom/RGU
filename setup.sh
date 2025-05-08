@@ -42,46 +42,28 @@ done
 echo -e "${YELLOW}Setting up configuration files...${NC}"
 
 # Copy example config files if they exist
-for config in "config.php"; do
-    if [ -f "config.example.php" ] && [ ! -f "$config" ]; then
-        cp "config.example.php" "$config"
-        chown $(logname):$(logname) "$config"
-        echo -e "${GREEN}Created $config file${NC}"
-    fi
-done
+if [ -f "config.example.php" ] && [ ! -f "config.php" ]; then
+    cp "config.example.php" "config.php"
+    chown $(logname):$(logname) "config.php"
+    echo -e "${GREEN}Created config.php file${NC}"
+fi
+
+# Default database settings
+dbname="rgu_portal"
+dbuser="rgu_user"
+dbpass="rgu_password123"  # Default password
 
 # Database setup
 echo -e "${YELLOW}Setting up database...${NC}"
-read -s -p "Enter MySQL root password: " rootpass
-echo
-[ -z "$rootpass" ] && { echo -e "${RED}MySQL root password cannot be empty${NC}"; exit 1; }
 
-read -p "Enter desired database name (default: rgu_portal): " dbname
-dbname=${dbname:-rgu_portal}
-read -p "Enter desired database user (default: rgu_user): " dbuser
-dbuser=${dbuser:-rgu_user}
-read -s -p "Enter desired database password: " dbpass
-echo
-[ -z "$dbpass" ] && { echo -e "${RED}Database password cannot be empty${NC}"; exit 1; }
-
-# Test MySQL connection
-if ! mysql -u root -p"$rootpass" -e "SELECT 1" >/dev/null 2>&1; then
-    echo -e "${RED}Failed to connect to MySQL. Please check your root password and MySQL service.${NC}"
-    exit 1
-fi
-
-# Create database and user
+# Create database and user with error handling
 echo -e "${YELLOW}Creating database and user...${NC}"
-if ! mysql -u root -p"$rootpass" << EOF
+mysql << EOF
 CREATE DATABASE IF NOT EXISTS \`$dbname\`;
 CREATE USER IF NOT EXISTS '$dbuser'@'localhost' IDENTIFIED BY '$dbpass';
 GRANT ALL PRIVILEGES ON \`$dbname\`.* TO '$dbuser'@'localhost';
 FLUSH PRIVILEGES;
 EOF
-then
-    echo -e "${RED}Failed to setup database. Please check your MySQL permissions.${NC}"
-    exit 1
-fi
 
 # Update config file with database credentials
 echo -e "${YELLOW}Updating configuration...${NC}"
@@ -116,9 +98,14 @@ chmod -R 777 uploads storage logs
 
 # Setup complete
 echo -e "\n${GREEN}Setup completed successfully!${NC}"
+echo -e "\n${YELLOW}Default Database Credentials:${NC}"
+echo -e "Database Name: ${GREEN}$dbname${NC}"
+echo -e "Database User: ${GREEN}$dbuser${NC}"
+echo -e "Database Password: ${GREEN}$dbpass${NC}"
+echo -e "\n${YELLOW}Default Admin Credentials:${NC}"
+echo -e "Username: ${GREEN}admin${NC}"
+echo -e "Password: ${GREEN}admin123${NC}"
 echo -e "\n${YELLOW}Next steps:${NC}"
 echo -e "1. Start the PHP server: ${YELLOW}sudo php -S localhost:8000${NC}"
 echo -e "2. Access the portal at: ${YELLOW}http://localhost:8000${NC}"
-echo -e "3. Default admin credentials:"
-echo -e "   Username: ${YELLOW}admin${NC}"
-echo -e "   Password: ${YELLOW}admin123${NC}"
+echo -e "\n${RED}IMPORTANT: Change these default passwords in production!${NC}"

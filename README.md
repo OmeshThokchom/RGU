@@ -34,6 +34,47 @@ A comprehensive web-based portal system for Royal Global University, developed a
 - **Name**: Dr. Sourabh
 - **Department**: Computer Science & Engineering
 
+## Quick Start
+
+### Prerequisites
+- PHP 7.4+
+- MySQL 5.7+
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd argu-portal
+```
+
+2. Make setup script executable:
+```bash
+chmod +x setup.sh
+```
+
+3. Run setup script:
+```bash
+sudo ./setup.sh
+```
+
+The setup script will automatically:
+- Create necessary directories
+- Configure database with default settings
+- Import database schema
+- Set proper permissions
+
+### Default Credentials
+
+Database:
+- Database Name: rgu_portal
+- Database User: rgu_user
+- Database Password: rgu_password123
+
+Admin Access:
+- Username: admin
+- Password: admin123
+
 ## Features
 
 ### 🎓 Academic Management
@@ -46,7 +87,6 @@ A comprehensive web-based portal system for Royal Global University, developed a
 ### 📢 Communication
 - Notice board system
 - Event management
-- Email notifications
 - Department announcements
 - Important updates
 
@@ -55,7 +95,6 @@ A comprehensive web-based portal system for Royal Global University, developed a
 - Responsive layout
 - Dark theme
 - Interactive components
-- Smooth animations
 
 ### 🔒 Security
 - Secure authentication
@@ -78,46 +117,6 @@ A comprehensive web-based portal system for Royal Global University, developed a
 - MySQL 5.7+
 - HTML5/CSS3
 - JavaScript
-- Python (Development Server)
-
-## Quick Start
-
-### Prerequisites
-- PHP 7.4+
-- MySQL 5.7+
-- Composer
-- Python 3.6+ (for development)
-
-### Installation
-
-1. Clone the repository
-```bash
-git clone https://github.com/dayananda/rgu-portal.git
-cd portal
-```
-
-2. Install dependencies
-```bash
-composer install
-```
-
-3. Configure environment
-```bash
-cp .env.example .env
-cp config.example.php config.php
-```
-
-4. Set up database
-```sql
-CREATE DATABASE rgu_portal;
-CREATE USER 'rgu_user'@'localhost' IDENTIFIED BY 'your_password';
-GRANT ALL PRIVILEGES ON rgu_portal.* TO 'rgu_user'@'localhost';
-```
-
-5. Start development server
-```bash
-python server.py
-```
 
 ## Documentation
 
@@ -164,13 +163,6 @@ This project demonstrates proficiency in:
 4. Web application development
 5. System security implementation
 6. Documentation practices
-
-## Acknowledgments
-
-Special thanks to:
-- Dr. Sumit Kumar (Course Instructor)
-- Department of Computer Science & Engineering
-- Royal Global University
 
 ## License
 
