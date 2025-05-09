@@ -1,8 +1,5 @@
 <?php
-define('DB_HOST', 'localhost');
-define('DB_USER', 'argu_user');
-define('DB_PASS', 'argu_pass');
-define('DB_NAME', 'argu_portal');
+require_once(__DIR__ . '/config.php');
 
 // Create connection
 function get_db_connection() {
@@ -19,6 +16,8 @@ function get_db_connection() {
             username VARCHAR(50) UNIQUE NOT NULL,
             password VARCHAR(255) NOT NULL,
             email VARCHAR(100) UNIQUE NOT NULL,
+            reset_token VARCHAR(64),
+            reset_token_expiry DATETIME,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )",
         
@@ -103,6 +102,19 @@ function get_db_connection() {
 // Function to safely escape user input
 function sanitize_input($conn, $data) {
     return mysqli_real_escape_string($conn, trim($data));
+}
+
+// Function to generate a secure random token
+function generate_token($length = 32) {
+    return bin2hex(random_bytes($length));
+}
+
+// Function to get base URL of the application
+function get_base_url() {
+    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
+    $host = $_SERVER['HTTP_HOST'];
+    $path = dirname($_SERVER['PHP_SELF']);
+    return rtrim($protocol . $host . $path, '/');
 }
 
 // Function to handle database errors

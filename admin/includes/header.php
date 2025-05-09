@@ -605,6 +605,26 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
         color: rgba(255, 255, 255, 0.9);
         font-size: 14px;
     }
+
+    .admin-user .profile-link {
+        color: rgba(255, 255, 255, 0.9);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+    
+    .admin-user .profile-link:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-1px);
+    }
+    
+    .admin-user .profile-link i {
+        margin-right: 0;
+    }
     </style>
 </head>
 <body class="admin-body">
@@ -629,7 +649,11 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                         </nav>
                         <div class="admin-user">
                             <a href="<?php echo $relative_path; ?>/index.php" class="return-link"><i class="fi fi-sr-arrow-left"></i>Main Site</a>
-                            <span class="user-name"><i class="fi fi-sr-user"></i><?php echo htmlspecialchars($_SESSION['admin_username']); ?></span>
+                            <span class="user-name">
+                                <a href="<?php echo $relative_path; ?>/admin/profile.php" class="profile-link" title="Profile Settings">
+                                    <i class="fi fi-sr-user"></i><?php echo htmlspecialchars($_SESSION['admin_username']); ?>
+                                </a>
+                            </span>
                             <a href="<?php echo $relative_path; ?>/admin/logout.php" class="btn btn-danger"><i class="fi fi-sr-sign-out-alt"></i>Logout</a>
                         </div>
                     </div>
