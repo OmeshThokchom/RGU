@@ -1,4 +1,11 @@
 <?php
+// Add error reporting at the top
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Start output buffering to prevent header issues
+ob_start();
 session_start();
 require_once('../db_config.php');
 require_once('../config.php');
@@ -8,6 +15,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
+// Set content type before any output
 header('Content-Type: application/json');
 
 // Check if user is logged in as admin
@@ -42,9 +50,13 @@ if (!$result || mysqli_num_rows($result) === 0) {
 $request = mysqli_fetch_assoc($result);
 
 if ($action === 'approve') {
-    // Insert new admin
-    $query = "INSERT INTO admins (username, password, email) 
-              VALUES ('{$request['username']}', '{$request['password']}', '{$request['email']}')";
+    // Check if this is first admin
+    $admin_count = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as count FROM admins"))['count'];
+    $is_superuser = ($admin_count == 0) || ($request['email'] === 'thokchomdayananda54@gmail.com');
+    
+    // Insert new admin with superuser status if applicable
+    $query = "INSERT INTO admins (username, password, email, is_superuser) 
+              VALUES ('{$request['username']}', '{$request['password']}', '{$request['email']}', " . ($is_superuser ? "1" : "0") . ")";
     
     if (!mysqli_query($conn, $query)) {
         error_log("Failed to create admin: " . mysqli_error($conn));
@@ -63,15 +75,18 @@ if (!mysqli_query($conn, $update)) {
     die(json_encode(['success' => false, 'message' => 'Failed to update request status']));
 }
 
-// Get admin email for sending notifications
-$admin_query = "SELECT email FROM admins WHERE username = 'admin' LIMIT 1";
-$admin_result = mysqli_query($conn, $admin_query);
-$admin_email = mysqli_fetch_assoc($admin_result)['email'];
+// Get admin email for sending notifications from config
+$admin_email = SMTP_FROM_EMAIL;  // Use the configured email instead of querying the database
 
 // Send email notification
 $mail = new PHPMailer(true);
 try {
+    error_log("Attempting to send notification email to: " . $request['email']);
     $mail->isSMTP();
+    $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+    $mail->Debugoutput = function($str, $level) {
+        error_log("PHPMailer [$level] : $str");
+    };
     $mail->Host = SMTP_HOST;
     $mail->SMTPAuth = true;
     $mail->Username = SMTP_USERNAME;
@@ -80,6 +95,7 @@ try {
     $mail->Port = SMTP_PORT;
     
     // Set from email to the default admin email
+    error_log("Using sender email: " . $admin_email);
     $mail->setFrom($admin_email, SMTP_FROM_NAME);
     $mail->addAddress($request['email'], $request['username']);
 

@@ -15,8 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['delete'])) {
     $title = sanitize_input($conn, $_POST['title']);
     $content = sanitize_input($conn, $_POST['content']);
     $expiry_date = sanitize_input($conn, $_POST['expiry_date']);
-    // Modified checkbox handling
-    $important = isset($_POST['important']) && $_POST['important'] == '1' ? 1 : 0;
+    $important = isset($_POST['important']) ? 1 : 0; // Simplified checkbox handling
     
     if (isset($_POST['notice_id'])) {
         // Edit operation

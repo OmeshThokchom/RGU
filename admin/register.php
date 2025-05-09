@@ -1,4 +1,11 @@
 <?php
+// Add error reporting at the top
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Start output buffering to prevent header issues
+ob_start();
 session_start();
 require_once('../db_config.php');
 require_once('../config.php');
@@ -25,25 +32,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = "Passwords do not match";
     } else {
         // Check if username or email already exists in admins or pending requests
-        $check_query = "SELECT username, email FROM admins 
+        $check_query = "SELECT 'admin' as source, username, email FROM admins 
                        WHERE username = '$username' OR email = '$email'
                        UNION
-                       SELECT username, email FROM admin_registration_requests 
-                       WHERE username = '$username' OR email = '$email'";
+                       SELECT 'request' as source, username, email FROM admin_registration_requests 
+                       WHERE (username = '$username' OR email = '$email') 
+                       AND status = 'pending'";
         $result = mysqli_query($conn, $check_query);
 
         if (mysqli_num_rows($result) > 0) {
             $existing = mysqli_fetch_assoc($result);
             if ($existing['username'] === $username) {
-                $error = "Username is already taken";
+                $error = $existing['source'] === 'admin' ? 
+                    "Username is already registered as an admin" : 
+                    "Username already has a pending registration request";
             } else {
-                $error = "Email is already registered";
+                $error = $existing['source'] === 'admin' ? 
+                    "Email is already registered as an admin" : 
+                    "Email already has a pending registration request";
             }
         } else {
             // Insert registration request
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $query = "INSERT INTO admin_registration_requests (username, password, email)
-                      VALUES ('$username', '$hashed_password', '$email')";
+            $query = "INSERT INTO admin_registration_requests (username, password, email, status)
+                      VALUES ('$username', '$hashed_password', '$email', 'pending')";
 
             if (mysqli_query($conn, $query)) {
                 // Send notification email to existing admins

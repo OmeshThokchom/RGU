@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (password_verify($password, $admin['password'])) {
             $_SESSION['admin_id'] = $admin['admin_id'];
             $_SESSION['admin_username'] = $admin['username'];
+            $_SESSION['is_superuser'] = $admin['is_superuser'];
             header('Location: index.php');
             exit();
         }

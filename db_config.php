@@ -16,6 +16,7 @@ function get_db_connection() {
             username VARCHAR(50) UNIQUE NOT NULL,
             password VARCHAR(255) NOT NULL,
             email VARCHAR(100) UNIQUE NOT NULL,
+            is_superuser BOOLEAN DEFAULT FALSE,
             reset_token VARCHAR(64),
             reset_token_expiry DATETIME,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -24,11 +25,13 @@ function get_db_connection() {
         // Admin registration requests table
         "CREATE TABLE IF NOT EXISTS admin_registration_requests (
             request_id INT PRIMARY KEY AUTO_INCREMENT,
-            username VARCHAR(50) UNIQUE NOT NULL,
+            username VARCHAR(50) NOT NULL,
             password VARCHAR(255) NOT NULL,
-            email VARCHAR(100) UNIQUE NOT NULL,
+            email VARCHAR(100) NOT NULL,
             status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            INDEX username_status_idx (username, status),
+            INDEX email_status_idx (email, status)
         )",
         
         // Departments table
@@ -98,9 +101,11 @@ function get_db_connection() {
         }
     }
     
-    // Insert default admin if not exists
-    $check_admin = mysqli_query($conn, "SELECT * FROM admins WHERE username = 'admin'");
-    if (mysqli_num_rows($check_admin) == 0) {
+    // Only insert default admin if there are no admin accounts at all
+    $check_admins = mysqli_query($conn, "SELECT COUNT(*) as count FROM admins");
+    $admin_count = mysqli_fetch_assoc($check_admins)['count'];
+    
+    if ($admin_count == 0) {
         $default_password = password_hash('admin123', PASSWORD_DEFAULT);
         mysqli_query($conn, "INSERT INTO admins (username, password, email) 
                             VALUES ('admin', '$default_password', 'admin@rgu.ac')");

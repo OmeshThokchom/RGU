@@ -135,4 +135,83 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => toast.remove(), 300);
         }, 3000);
     };
+
+    // Dashboard search functionality
+    let searchTimeout;
+    const searchInput = document.getElementById('dashboardSearch');
+    if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+            clearTimeout(searchTimeout);
+            const searchTerm = e.target.value;
+
+            // Clear results if search is empty
+            if (!searchTerm) {
+                document.querySelectorAll('.search-results').forEach(div => div.innerHTML = '');
+                document.querySelectorAll('.dashboard-card').forEach(card => {
+                    const countElement = card.querySelector('.count');
+                    if (countElement) {
+                        countElement.style.display = 'block';
+                    }
+                });
+                return;
+            }
+
+            // Hide counts when showing search results
+            document.querySelectorAll('.dashboard-card').forEach(card => {
+                const countElement = card.querySelector('.count');
+                if (countElement) {
+                    countElement.style.display = 'none';
+                }
+            });
+
+            // Debounce the search
+            searchTimeout = setTimeout(() => {
+                fetch('ajax_handlers.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `action=search&term=${encodeURIComponent(searchTerm)}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Update each section with its results
+                        Object.keys(data).forEach(section => {
+                            if (section === 'success') return;
+                            const resultsDiv = document.querySelector(`[data-section="${section}"] .search-results`);
+                            if (resultsDiv && Array.isArray(data[section])) {
+                                resultsDiv.innerHTML = data[section].map(item => {
+                                    const displayName = item.title || item.name || 
+                                                      (item.first_name ? `${item.first_name} ${item.last_name}` : '');
+                                    return `<div class="search-item">${displayName}</div>`;
+                                }).join('');
+                            }
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Search error:', error);
+                });
+            }, 300);
+        });
+    }
+
+    // Admin card search functionality
+    const adminSearchInput = document.getElementById('adminSearch');
+    if (adminSearchInput) {
+        adminSearchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const adminCards = document.querySelectorAll('.admin-card');
+            
+            adminCards.forEach(card => {
+                const searchData = card.dataset.search.toLowerCase();
+                if (searchData.includes(searchTerm)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        });
+    }
 });

@@ -645,6 +645,7 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                                 <li><a href="<?php echo $relative_path; ?>/admin/notices.php" <?php echo $current_page === 'notices' ? 'class="active"' : ''; ?>><i class="fi fi-sr-megaphone"></i>Notices</a></li>
                                 <li><a href="<?php echo $relative_path; ?>/admin/events.php" <?php echo $current_page === 'events' ? 'class="active"' : ''; ?>><i class="fi fi-sr-calendar"></i>Events</a></li>
                                 <li><a href="<?php echo $relative_path; ?>/admin/admins.php" <?php echo $current_page === 'admins' ? 'class="active"' : ''; ?>><i class="fi fi-sr-users-gear"></i>Administrators</a></li>
+                                <li><a href="<?php echo $relative_path; ?>/admin/documentation.php" <?php echo $current_page === 'documentation' ? 'class="active"' : ''; ?>><i class="fi fi-sr-book"></i>Documentation</a></li>
                             </ul>
                         </nav>
                         <div class="admin-user">
