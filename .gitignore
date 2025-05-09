@@ -1,36 +1,31 @@
 # Environment files
 .env
-config.php
-.venv/
+.env.local
+.env.*
+!.env.example
+
+# Logs
+*.log
+error.log
+logs/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
 venv/
 ENV/
+
+# Development
+.vscode/
+.idea/
+*.swp
+*.swo
 
 # Dependencies
 /vendor/
 /node_modules/
-__pycache__/
-*.py[cod]
-*$py.class
-
-# IDEs and editors
-.idea/
-.vscode/
-*.swp
-*.swo
-*~
-
-# Logs and databases
-*.log
-*.sqlite
-*.sql
-*.sql.gz
-error.log
-
-# Uploads and user content
-/uploads/*
-!/uploads/.gitkeep
-/storage/*
-!/storage/.gitkeep
 
 # Cache and temporary files
 *.cache
@@ -58,14 +53,6 @@ htmlcov/
 # Session files
 /sessions/
 *.session
-
-# Local development
-.ngrok/
-.python-version
-.env.local
-.env.development
-.env.test
-.env.production
 
 # Security files
 *.pem
