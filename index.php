@@ -55,33 +55,36 @@ $conn = get_db_connection();
 <section class="notices">
     <div class="container">
         <h2><i class="fi fi-sr-megaphone"></i> Latest Notices</h2>
-        <div class="notice-list">
+        <div class="notice-grid">
             <?php
-            $checkCol = mysqli_query($conn, "SHOW COLUMNS FROM notices LIKE 'posted_date'");
-            $hasPostedDate = mysqli_num_rows($checkCol) > 0;
-
-            $query = $hasPostedDate 
-                ? "SELECT * FROM notices ORDER BY posted_date DESC LIMIT 5"
-                : "SELECT * FROM notices LIMIT 5";
-
+            // Get latest active notices, prioritizing important ones
+            $query = "SELECT * FROM notices 
+                     WHERE (expiry_date IS NULL OR expiry_date >= CURDATE())
+                     ORDER BY important DESC, created_at DESC 
+                     LIMIT 5";
             $result = mysqli_query($conn, $query);
 
             while ($notice = mysqli_fetch_assoc($result)) {
-                echo '<div class="notice-item' . ($notice['important'] ? ' important' : '') . '">';
+                $content_preview = strlen($notice['content']) > 200 ? 
+                                substr($notice['content'], 0, 200) . '...' : 
+                                $notice['content'];
+                                
+                echo '<div class="notice-card' . ($notice['important'] ? ' important' : '') . '">';
                 if ($notice['important']) {
-                    echo '<span class="important-badge"><i class="fi fi-sr-star"></i> Important</span>';
+                    echo '<div class="notice-badge important"><i class="fi fi-sr-star"></i> Important</div>';
                 }
+                echo '<div class="notice-header">';
                 echo '<h3><i class="fi fi-sr-document-signed"></i> ' . htmlspecialchars($notice['title']) . '</h3>';
-                echo '<p>' . htmlspecialchars($notice['content']) . '</p>';
-                
-                // Fallback: use date('now') if posted_date missing
-                $date = isset($notice['posted_date']) ? date('F j, Y', strtotime($notice['posted_date'])) : date('F j, Y');
-                echo '<small><i class="fi fi-sr-calendar"></i> Posted on: ' . $date . '</small>';
+                echo '<div class="notice-date">';
+                echo '<i class="fi fi-sr-calendar"></i> Posted: ' . date('F j, Y', strtotime($notice['created_at']));
+                echo '</div>';
+                echo '</div>';
+                echo '<div class="notice-content">' . nl2br(htmlspecialchars($content_preview)) . '</div>';
                 echo '</div>';
             }
             ?>
         </div>
-        <p class="view-all"><a href="pages/notices.php"><i class="fi fi-sr-list"></i> View All Notices</a></p>
+        <p class="view-all"><a href="pages/notices.php" class="btn-glass"><i class="fi fi-sr-list"></i> View All Notices</a></p>
     </div>
 </section>
 
