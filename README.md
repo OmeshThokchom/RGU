@@ -4,14 +4,18 @@ A comprehensive web-based portal system for Royal Global University, developed a
 
 ## Project Status
 
-![Build Status](https://github.com/dayananda/rgu-portal/workflows/CI/badge.svg)
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)
+![Issues](https://img.shields.io/badge/issues-open-yellow.svg)
+![Pull Requests](https://img.shields.io/badge/pull%20requests-open-blue.svg)
+![Forks](https://img.shields.io/badge/forks-0-lightgrey.svg)
+![Stars](https://img.shields.io/badge/stars-0-yellow.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Version](https://img.shields.io/badge/version-1.0.0-green.svg)
 
 ## Screenshots
 
 ### CLIENT Dashboard
-![CLIENT Dashboard](screenshots/public_depare   tment_page.png)
+![CLIENT Dashboard](screenshots/public_deparetment_page.png)
 
 ### Server Monitoring
 ![Server Monitoring](screenshots/terminal.png)
@@ -58,17 +62,14 @@ A comprehensive web-based portal system for Royal Global University, developed a
 1. Clone the repository:
 ```bash
 git clone https://github.com/OmeshThokchom/RGU.git
-cd RGu
+cd RGU
 ```
 
-2. Make setup script executable:
-```bash
-chmod +x setup.sh
-```
-
-3. Run setup script:
+2. Run setup script:
 ```bash
 sudo ./setup.sh
+or
+bash setup.sh
 ```
 
 The setup script will automatically:
@@ -87,6 +88,8 @@ Database:
 Admin Access:
 - Username: admin
 - Password: admin123
+
+- **NOTE : Change the default password after login.**
 
 ## Features
 
@@ -184,3 +187,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Project Timeline
 - **Start Date**: 4th Semester
 - **Completion**: May 2025
+- **Version**: 1.0.0
+
+## Note
+This project is a personal academic endeavor and is not intended for commercial use. All rights reserved to the developer. For any inquiries, please contact the developer via email or GitHub. This project is built with 60% of AI generated code. The AI generated code is not perfect and may contain errors. BTW, Overall this code is tested and working fine. The project is built with the help of ChatGPT and other AI tools. The developer is not responsible for any issues that may arise from the use of this code. Please use it at your own risk.

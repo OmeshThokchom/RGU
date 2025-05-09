@@ -2,7 +2,7 @@
 
 ## Reporting Security Issues
 
-If you discover a security vulnerability in RGU Portal, please send an email to security@rgu.ac.in. All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability in RGU Portal, please send an email to developer. All security vulnerabilities will be promptly addressed.
 
 ## Security Measures
 

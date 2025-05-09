@@ -21,6 +21,16 @@ function get_db_connection() {
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )",
         
+        // Admin registration requests table
+        "CREATE TABLE IF NOT EXISTS admin_registration_requests (
+            request_id INT PRIMARY KEY AUTO_INCREMENT,
+            username VARCHAR(50) UNIQUE NOT NULL,
+            password VARCHAR(255) NOT NULL,
+            email VARCHAR(100) UNIQUE NOT NULL,
+            status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )",
+        
         // Departments table
         "CREATE TABLE IF NOT EXISTS departments (
             dept_id INT PRIMARY KEY AUTO_INCREMENT,

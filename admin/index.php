@@ -10,7 +10,8 @@ $queries = [
     'students' => "SELECT COUNT(*) as count FROM students",
     'faculty' => "SELECT COUNT(*) as count FROM faculties",
     'notices' => "SELECT COUNT(*) as count FROM notices",
-    'events' => "SELECT COUNT(*) as count FROM events"
+    'events' => "SELECT COUNT(*) as count FROM events",
+    'pending_registrations' => "SELECT COUNT(*) as count FROM admin_registration_requests WHERE status = 'pending'"
 ];
 
 foreach ($queries as $key => $query) {
@@ -23,6 +24,9 @@ $recent_notices = mysqli_query($conn, "SELECT * FROM notices ORDER BY created_at
 
 // Get upcoming events
 $upcoming_events = mysqli_query($conn, "SELECT * FROM events WHERE event_date >= CURDATE() ORDER BY event_date LIMIT 5");
+
+// Get pending registration requests
+$pending_requests = mysqli_query($conn, "SELECT * FROM admin_registration_requests WHERE status = 'pending' ORDER BY created_at DESC");
 ?>
 
 <div class="container">
@@ -110,6 +114,46 @@ $upcoming_events = mysqli_query($conn, "SELECT * FROM events WHERE event_date >=
             <?php endif; ?>
         </div>
     </div>
+
+    <!-- Add this after the main dashboard grid -->
+    <?php if ($counts['pending_registrations'] > 0): ?>
+        <div class="dashboard-card pending-registrations">
+            <h3><i class="fi fi-sr-user-time"></i> Pending Admin Registration Requests</h3>
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th><i class="fi fi-sr-user"></i> Username</th>
+                            <th><i class="fi fi-sr-envelope"></i> Email</th>
+                            <th><i class="fi fi-sr-calendar"></i> Requested</th>
+                            <th><i class="fi fi-sr-settings"></i> Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($request = mysqli_fetch_assoc($pending_requests)): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($request['username']); ?></td>
+                                <td><?php echo htmlspecialchars($request['email']); ?></td>
+                                <td><?php echo date('F j, Y', strtotime($request['created_at'])); ?></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button type="button" class="btn btn-primary" 
+                                                onclick="handleRegistrationRequest('<?php echo $request['request_id']; ?>', 'approve')">
+                                            <i class="fi fi-sr-check"></i> Approve
+                                        </button>
+                                        <button type="button" class="btn btn-danger"
+                                                onclick="handleRegistrationRequest('<?php echo $request['request_id']; ?>', 'reject')">
+                                            <i class="fi fi-sr-cross"></i> Reject
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <?php endif; ?>
 </div>
 
 <style>
@@ -193,6 +237,20 @@ $upcoming_events = mysqli_query($conn, "SELECT * FROM events WHERE event_date >=
 .search-item:last-child {
     border-bottom: none;
 }
+
+.pending-registrations {
+    margin-top: 25px;
+}
+
+.pending-registrations .action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.pending-registrations .btn {
+    padding: 6px 12px;
+    font-size: 13px;
+}
 </style>
 
 <script>
@@ -242,6 +300,33 @@ document.getElementById('dashboardSearch').addEventListener('input', function(e)
         .catch(error => console.error('Error:', error));
     }, 300);
 });
+
+async function handleRegistrationRequest(requestId, action) {
+    if (!confirm(`Are you sure you want to ${action} this registration request?`)) {
+        return;
+    }
+
+    try {
+        const response = await fetch('handle_registration.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `request_id=${requestId}&action=${action}`
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            // Reload the page to reflect changes
+            location.reload();
+        } else {
+            alert(result.message || 'Failed to process request');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to process request');
+    }
+}
 </script>
 
 <?php

@@ -53,7 +53,7 @@ Welcome to the RGU Portal user guide. This comprehensive guide will help you nav
 ## Administrative Interface
 
 ### Dashboard Overview
-![Dashboard Screenshot](../screenshots/dashboard.png)
+![Dashboard Screenshot](../screenshots/admin_page.png)
 1. Quick statistics at the top
 2. Recent activities feed
 3. Quick action buttons
@@ -223,20 +223,6 @@ Welcome to the RGU Portal user guide. This comprehensive guide will help you nav
 - Emergency Contact: +91 361 220 7000
 
 ## Tips and Tricks
-
-### Keyboard Shortcuts
-- `Alt + D`: Go to Dashboard
-- `Alt + S`: Search
-- `Alt + N`: New Entry
-- `Alt + H`: Help
-- `Esc`: Close popup
-
-### Time-Saving Features
-1. Use bulk operations
-2. Set up email templates
-3. Use filter presets
-4. Create bookmarks
-5. Enable notifications
 
 ### Best Practices
 1. Regular password updates

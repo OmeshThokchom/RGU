@@ -17,12 +17,7 @@ Before installing the RGU Portal, ensure you have the following:
    cd RGU
    ```
 
-2. Make the setup script executable:
-   ```bash
-   chmod +x setup.sh
-   ```
-
-3. Run the setup script with sudo:
+2. Run the setup script with sudo:
    ```bash
    sudo ./setup.sh
    ```

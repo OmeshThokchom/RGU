@@ -2,7 +2,6 @@
 
 ## Project Developer
 
-### Student Developer
 - THOKCHOM DAYANANDA
   - Role: Developer
   - Course: B.Tech Computer Science & Engineering
@@ -12,7 +11,7 @@
   - GitHub: https://github.com/OmeshThokchom
 
 ## Academic Guide
-- Dr. Sourabh
+- Dr. Sourabh Sutradhar
   - Role: Course Instructor
   - Department: Computer Science & Engineering
   - Subject: Database Management Systems

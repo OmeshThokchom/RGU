@@ -35,14 +35,15 @@ As this is an academic project, I commit to:
 - Name: THOKCHOM DAYANANDA
 - Email: thokchomdayananda54@gmail.com
 - GitHub: [OmeshThokchom](https://github.com/OmeshThokchom)
+- Hugging Face: [DayanandaThokchom](https://huggingface.co/DayanandaThokchom)
 
 ### Course Information
 - Institution: Royal Global University, Guwahati, Assam
 - Department: Computer Science & Engineering
 - Course: Database Management Systems (DBMS)
 - Semester: 4th Semester
-- Course Instructor: Dr. Sourabh
+- Course Instructor: Saurabh Sutradhar
 
 ## Version
 Code of Conduct v1.0.0
-Last Updated: 2025-05-08
+Last Updated: 2025-05-09

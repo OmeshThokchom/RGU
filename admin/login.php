@@ -183,6 +183,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             color: rgba(255, 255, 255, 0.9);
         }
         
+        .additional-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .register-link {
+            text-align: center;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 8px;
+            border-radius: 8px;
+            background: rgba(107, 70, 193, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .register-link:hover {
+            background: rgba(107, 70, 193, 0.2);
+        }
+        
         @media (max-width: 480px) {
             .login-container {
                 padding: 20px;
@@ -236,9 +262,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <i class="fi fi-sr-sign-in-alt"></i> Login
                 </button>
                 
-                <a href="<?php echo $relative_path; ?>/" class="return-link">
-                    <i class="fi fi-sr-arrow-left"></i> Back to Main Site
-                </a>
+                <div class="additional-links">
+                    <a href="register.php" class="register-link">
+                        <i class="fi fi-sr-user-add"></i> New Registration
+                    </a>
+                    <a href="<?php echo $relative_path; ?>/" class="return-link">
+                        <i class="fi fi-sr-arrow-left"></i> Back to Main Site
+                    </a>
+                </div>
             </form>
         </div>
     </div>

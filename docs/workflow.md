@@ -6,19 +6,23 @@
 
 ```bash
 # Initial Setup
-git clone <repository-url>
-cd rgu-portal
-composer install
-
-# Database Setup
-mysql -u root -p
-CREATE DATABASE rgu_portal;
-USE rgu_portal;
-source schema.sql;
+git clone https:github.com/OmeshThokchom/RGU.git
+cd RGU
+sudo ./setup.sh
+or 
+bash setup.sh
 
 # Start Development Server
-python server.py
+php -S localhost:8000 
 ```
+
+## IF you want to deploy the localhost server to a remote server, use the following command 
+```terminal
+#inside the RGU directory
+python3 server.py
+```
+
+**Note:** To run the server you need to have ngrok account. and setup ngrok in your system. click this [ngrok](https://dashboard.ngrok.com/get-started/setup) for ngrok setup if u dont have already.
 
 ### 2. Version Control Workflow
 
