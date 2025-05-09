@@ -926,6 +926,24 @@ body:not(.admin-body) .notice-item .important-badge {
     justify-content: space-between;
 }
 
+.students-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.student-search-form {
+    flex: 1;
+    max-width: 500px;
+}
+
+.student-search-form .search-input-wrapper {
+    width: 100%;
+}
+
 .students-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -1183,8 +1201,19 @@ body:not(.admin-body) .notice-item .important-badge {
 .faculty-header {
     display: flex;
     align-items: center;
-    gap: 1.25rem;
-    margin-bottom: 1.5rem;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.faculty-search-form {
+    flex: 1;
+    max-width: 500px;
+}
+
+.faculty-search-form .search-input-wrapper {
+    width: 100%;
 }
 
 .faculty-avatar {
@@ -1265,6 +1294,7 @@ body:not(.admin-body) .notice-item .important-badge {
 .faculty-contact a:hover {
     background: rgba(107, 70, 193, 0.2);
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(107, 70, 193, 0.15);
 }
 
 /* Documentation Glass Effects */

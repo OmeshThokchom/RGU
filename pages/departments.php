@@ -5,14 +5,13 @@ $conn = get_db_connection();
 // Get department code from URL if present
 $dept_code = isset($_GET['dept']) ? sanitize_input($conn, $_GET['dept']) : '';
 
-if ($dept_code) {
+if ($dept_code):
     // Show specific department details
     $query = "SELECT * FROM departments WHERE dept_code = '$dept_code'";
     $result = mysqli_query($conn, $query);
     $department = mysqli_fetch_assoc($result);
 
-    if ($department) {
-        ?>
+    if ($department): ?>
         <div class="container">
             <h1><i class="fi fi-sr-building"></i> <?php echo htmlspecialchars($department['dept_name']); ?></h1>
             <div class="department-details">
@@ -29,44 +28,65 @@ if ($dept_code) {
             <div class="department-sections">
                 <section class="faculty-section">
                     <h2><i class="fi fi-sr-chalkboard-user"></i> Faculty Members</h2>
+                    
+                    <div class="faculty-header">
+                        <!-- Search form -->
+                        <form method="GET" class="search-form faculty-search-form">
+                            <input type="hidden" name="dept" value="<?php echo htmlspecialchars($dept_code); ?>">
+                            <div class="search-input-wrapper">
+                                <i class="fi fi-sr-search"></i>
+                                <input type="text" name="faculty_search" placeholder="Search faculty by name or designation...">
+                            </div>
+                        </form>
+                    </div>
+
                     <div class="faculty-grid">
                         <?php
+                        $faculty_search = isset($_GET['faculty_search']) ? sanitize_input($conn, $_GET['faculty_search']) : '';
+                        
                         $query = "SELECT f.*, 
                                  COUNT(DISTINCT s.student_id) as student_count
                                  FROM faculties f 
                                  LEFT JOIN students s ON s.dept_id = f.dept_id 
-                                 WHERE f.dept_id = {$department['dept_id']}
-                                 GROUP BY f.faculty_id";
+                                 WHERE f.dept_id = {$department['dept_id']}";
+                        
+                        if ($faculty_search) {
+                            $query .= " AND (f.first_name LIKE '%$faculty_search%' 
+                                      OR f.last_name LIKE '%$faculty_search%'
+                                      OR f.designation LIKE '%$faculty_search%')";
+                        }
+                        
+                        $query .= " GROUP BY f.faculty_id";
                         $faculty_result = mysqli_query($conn, $query);
                         
-                        while ($faculty = mysqli_fetch_assoc($faculty_result)) {
-                            echo '<div class="faculty-card">';
-                            echo '<div class="faculty-info">';
-                            echo '<h3><i class="fi fi-sr-user"></i> ' . htmlspecialchars($faculty['first_name'] . ' ' . $faculty['last_name']) . '</h3>';
-                            echo '<p class="designation"><i class="fi fi-sr-briefcase"></i> ' . htmlspecialchars($faculty['designation']) . '</p>';
-                            
-                            echo '<div class="qualification">';
-                            echo '<strong><i class="fi fi-sr-graduation-cap"></i> Qualification</strong>';
-                            echo '<p>' . nl2br(htmlspecialchars($faculty['qualification'])) . '</p>';
-                            echo '</div>';
-                            
-                            echo '<div class="contact-info">';
-                            if ($faculty['email']) {
-                                echo '<p><i class="fi fi-sr-envelope"></i> ';
-                                echo '<a href="mailto:' . htmlspecialchars($faculty['email']) . '">' . htmlspecialchars($faculty['email']) . '</a></p>';
+                        if (mysqli_num_rows($faculty_result) > 0):
+                            while ($faculty = mysqli_fetch_assoc($faculty_result)) {
+                                echo '<div class="faculty-card">';
+                                echo '<div class="faculty-info">';
+                                echo '<h3><i class="fi fi-sr-user"></i> ' . htmlspecialchars($faculty['first_name'] . ' ' . $faculty['last_name']) . '</h3>';
+                                echo '<p class="designation"><i class="fi fi-sr-briefcase"></i> ' . htmlspecialchars($faculty['designation']) . '</p>';
+                                
+                                echo '<div class="qualification">';
+                                echo '<strong><i class="fi fi-sr-graduation-cap"></i> Qualification</strong>';
+                                echo '<p>' . nl2br(htmlspecialchars($faculty['qualification'])) . '</p>';
+                                echo '</div>';
+                                
+                                echo '<div class="contact-info">';
+                                if ($faculty['email']) {
+                                    echo '<p><i class="fi fi-sr-envelope"></i> ';
+                                    echo '<a href="mailto:' . htmlspecialchars($faculty['email']) . '">' . htmlspecialchars($faculty['email']) . '</a></p>';
+                                }
+                                if ($faculty['phone']) {
+                                    echo '<p><i class="fi fi-sr-phone-call"></i> ' . htmlspecialchars($faculty['phone']) . '</p>';
+                                }
+                                echo '</div>';
+                                
+                                echo '</div>';
+                                echo '</div>';
                             }
-                            if ($faculty['phone']) {
-                                echo '<p><i class="fi fi-sr-phone-call"></i> ' . htmlspecialchars($faculty['phone']) . '</p>';
-                            }
-                            echo '</div>';
-                            
-                            echo '</div>';
-                            echo '</div>';
-                        }
-                        
-                        if (mysqli_num_rows($faculty_result) == 0) {
+                        else:
                             echo '<p>No faculty members found.</p>';
-                        }
+                        endif;
                         ?>
                     </div>
                 </section>
@@ -89,15 +109,12 @@ if ($dept_code) {
                         ?>
                         
                         <!-- Search form -->
-                        <form method="GET" action="students.php" class="search-form">
+                        <form method="GET" class="search-form student-search-form">
                             <input type="hidden" name="dept" value="<?php echo htmlspecialchars($dept_code); ?>">
                             <div class="search-input-wrapper">
                                 <i class="fi fi-sr-search"></i>
-                                <input type="text" name="search" placeholder="Search students by name or roll number...">
+                                <input type="text" name="student_search" placeholder="Search students by name or roll number...">
                             </div>
-                            <button type="submit" class="btn-glass primary">
-                                <i class="fi fi-sr-search"></i> Search
-                            </button>
                         </form>
                         
                         <div class="view-all">
@@ -109,11 +126,20 @@ if ($dept_code) {
 
                     <?php
                     // Get recent students with more details
+                    $student_search = isset($_GET['student_search']) ? sanitize_input($conn, $_GET['student_search']) : '';
+                    
                     $recent_students_query = "SELECT s.*, 
                                             (SELECT COUNT(*) FROM students WHERE dept_id = s.dept_id AND semester = s.semester) as semester_count
                                             FROM students s 
-                                            WHERE s.dept_id = {$department['dept_id']} 
-                                            ORDER BY s.student_id DESC LIMIT 6";
+                                            WHERE s.dept_id = {$department['dept_id']}";
+                    
+                    if ($student_search) {
+                        $recent_students_query .= " AND (s.first_name LIKE '%$student_search%' 
+                                                OR s.last_name LIKE '%$student_search%'
+                                                OR s.roll_number LIKE '%$student_search%')";
+                    }
+                    
+                    $recent_students_query .= " ORDER BY s.student_id DESC LIMIT 6";
                     $recent_students_result = mysqli_query($conn, $recent_students_query);
                     
                     if (mysqli_num_rows($recent_students_result) > 0):
@@ -190,13 +216,10 @@ if ($dept_code) {
                 </section>
             </div>
         </div>
-        <?php
-    } else {
-        echo '<div class="container"><p>Department not found.</p></div>';
-    }
-} else {
-    // Show list of all departments
-    ?>
+    <?php else: ?>
+        <div class="container"><p>Department not found.</p></div>
+    <?php endif; 
+else: ?>
     <div class="container">
         <h1><i class="fi fi-sr-building"></i> Our Departments</h1>
         <div class="departments-grid">
@@ -219,8 +242,8 @@ if ($dept_code) {
             ?>
         </div>
     </div>
-    <?php
-}
+<?php 
+endif;
 
 mysqli_close($conn);
 require_once('../includes/footer.php');
